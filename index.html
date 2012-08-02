@@ -1,0 +1,214 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.haircut.js"></script>
+    <style>
+
+      body {
+        font: 14px/20px 'Helvetica Neue', Helvetica, Arial, Sans-serif;
+      }
+
+      .Haircut,
+      .Beard,
+      .Shave {
+        position: relative;
+        width: 30%;
+        padding: 20px;
+        margin-bottom: 20px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /*
+      --------------- Magnification Bubble
+      */
+
+      ._LVhaircutExpand {
+        opacity:                               0;
+        position:                              absolute;
+        padding:                               4px 8px;
+        background:                            #e29038; /* Old browsers */
+        background:                            -moz-linear-gradient(top,  #e29038 0%, #e47600 100%); /* FF3.6+ */
+        background:                            -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e29038), color-stop(100%,#e47600));
+        background:                            -webkit-linear-gradient(top,  #e29038 0%,#e47600 100%); /* Chrome10+,Safari5.1+ */
+        background:                            -o-linear-gradient(top,  #e29038 0%,#e47600 100%); /* Opera 11.10+ */
+        background:                            -ms-linear-gradient(top,  #e29038 0%,#e47600 100%); /* IE10+ */
+        background:                            linear-gradient(to bottom,  #e29038 0%,#e47600 100%); /* W3C */
+        border:                                2px solid #E29038;
+        word-wrap:                             break-word;
+        color:                                 #FFF;
+        font-size:                             14px;
+        margin-top:                            3px;
+        -webkit-borde r-radius:                7px;
+        -moz-border-radius:                    7px;
+        -ms-border-radius:                     7px;
+        -o-border-radius:                      7px;
+        border-radius:                         7px;
+        -webkit-transition:                    opacity 300ms cubic-bezier(0.950, 0.050, 0.795, 0.035),
+                                               margin 300ms cubic-bezier(0.860, 0.000, 0.070, 1.000);
+        -moz-transition:                       opacity 300ms cubic-bezier(0.950, 0.050, 0.795, 0.035),
+                                               margin 300ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        -ms-transition:                        opacity 300ms cubic-bezier(0.950, 0.050, 0.795, 0.035),
+                                               margin 300ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        -o-transition:                         opacity 300ms cubic-bezier(0.950, 0.050, 0.795, 0.035),
+                                               margin 300ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        transition:                            opacity 300ms cubic-bezier(0.950, 0.050, 0.795, 0.035),
+                                               margin 300ms cubic-bezier(0.860, 0.000, 0.070, 1.000);
+        -webkit-transition-timing-function:    cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        -moz-transition-timing-function:       cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        -ms-transition-timing-function:        cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        -o-transition-timing-function:         cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        transition-timing-function:            cubic-bezier(0.860, 0.000, 0.070, 1.000); /* easeInExpo */
+        -webkit-box-shadow:                    0 1px 3px rgba(0,0,0,.2);
+        -moz-box-shadow:                       0 1px 3px rgba(0,0,0,.2);
+        box-shadow:                            0 1px 3px rgba(0,0,0,.2);
+        text-shadow:                           0 -1px 0 rgba(0,0,0,.1);
+        -webkit-font-smoothing:antialiased;
+      }
+
+      ._LVshowHaircutExpand {
+        opacity:                1;
+        margin-top: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <div class="Beard">
+      <abbr>Lorem ipsum dolor sit AMET MMMMMMMMEEEEAAAATTTT amet consectetur adipiscing elit.psd</abbr>
+    </div>
+
+    <div class="Haircut">
+      <abbr>Donec vel felis elit vestibulum ante ipsum primis in faucibus orci luctus.psd</abbr>
+    </div>
+    <div class="Shave">
+      <a href="https://layervault.com/permalink/u2jpCrUI5n"><abbr>https://layervault.com/permalink/u2jpCrUI5n</abbr></a>
+    </div>
+    <script>
+      $('.Beard').haircut({
+        "placement" : "start"
+      });
+
+      $('.Haircut').haircut({
+        "placement" : "middle"
+      });
+
+      $('.Shave').haircut({
+        "placement" : "end"
+      });
+
+      $(window).resize(function() {
+        $('.Haircut, .Beard, .Shave').stringResize();
+      })
+    </script>
+  </body>
+</html>
