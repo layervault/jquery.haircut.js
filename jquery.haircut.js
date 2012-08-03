@@ -3,13 +3,12 @@
     options = {
       bindToResize      : true, //Clips text when the page resizes
       bindToScroll      : true, //Only clips text that's in the viewport
-      jitterPadding     : 50, //The more haircut items on the page, the more it jitters during animation. Adding padding reduces jitter but gives you less usable space.
+      jitterPadding     : 10, //The more haircut items on the page, the more it jitters during animation. Adding padding reduces jitter but gives you less usable space.
       placement         : "middle",
       scrollTimeout     : 50
     },
     
     bindAbbrHover,
-    bindScrollEvent,
     createExpansion,
     createTemporaryStringContainer,
     getLeftmostCharPos,
@@ -21,41 +20,31 @@
     placement,
     positionExpansion,
     resize,
-    setAbbrTitle,
     setContainerWidth,
+    setRandomId,
     setup,
-    showExpansion,
-    unbindAbbrHover;
+    showExpansion;
 
-  bindAbbrHover = function($e) {
-    $e.on('mouseenter', 'abbr', function () {
-      showExpansion($e);
-    });
+  bindAbbrHover = function() {
+    if (!this.eventsBound) {
+      $('body').on('mouseenter', '._LVhaircut abbr', function () {
+        if ($(this).hasClass('_LVhaircutTrimmed')) {
+          var $e = $('.' + $(this).data('container_id'));
+          showExpansion($e);
+        }
+      });
 
-    $('body').on('mouseleave', '._LVhaircutExpand', function () {
-      hideExpansion($e);
-    });
-  };
+      $('body').on('mouseleave', '._LVshowHaircutExpand', function () {
+        hideExpansion($(this));
+      });  
 
-  bindScrollEvent = function($e) {
-    var timeout       = 0,
-        scrollTimeout = $e.data('scrollTimeout');
-        
-    $(window).scroll(function(){
-      clearTimeout(timeout);
-      timeout = setTimeout(function(){
-        $e.stringResize()},
-      scrollTimeout);
-    });
-  };
-
-  unbindAbbrHover = function($e) {
-    $e.off('mouseenter', 'abbr');
+      this.eventsBound = true;
+    }
   };
 
   createExpansion = function($e) {
     var expansionStringContainer   = document.createElement('div'),
-        randomId                   = getRandomId(),
+        randomId                   = $e.data('container_id'),
         $abbr                      = $e.find('abbr'),
         $abbrParent,
         $abbrParentClone;
@@ -66,10 +55,12 @@
     } else {
       $(expansionStringContainer).html($abbr.attr('title'));
     }
+
     $(expansionStringContainer).addClass('_LVhaircutExpand');
+
     $(expansionStringContainer).attr('id', randomId);
-    $e.data('id', randomId);
-    $('body').append(expansionStringContainer);
+
+    $('body').append(expansionStringContainer);    
   };
 
   createTemporaryStringContainer = function($e, temporaryStringContainer) {
@@ -84,8 +75,8 @@
   };
 
   showExpansion = function($e) {
-    var expansionId = $e.data('id'),
-        $expansion  = $('#' + expansionId);
+    var expansionId = $e.data('container_id'),
+    $expansion  = $('#' + expansionId);
     positionExpansion($e, $expansion);
     $expansion.addClass('_LVshowHaircutExpand');
   };
@@ -98,14 +89,16 @@
         attrHeight                = $attr.height(),
         attrTop                   = $attr.offset().top,
         attrLeft                  = $attr.offset().left,
+        expansionLeftPadding      = parseInt($('._LVhaircutExpand').css('padding-left'),10) * 2,
         topPosition               = (attrTop + (attrHeight/2)) - (h/2),
         leftPosition              = (attrLeft + (attrWidth/2)) - (w/2)
 
-    if (leftPosition < 0) {
-      leftPosition = 0;
+
+    if ((leftPosition - expansionLeftPadding)< 0) {
+      leftPosition = (expansionLeftPadding * 2);
     }
     else if ((leftPosition + w) > $(window).width()) {
-      leftPosition = $(window).width() - w;
+      leftPosition = $(window).width() - w + expansionLeftPadding;
     }
 
     $expansion.css({
@@ -114,9 +107,7 @@
     });
   };
 
-  hideExpansion = function($e) {
-    var expansionId = $e.data('id'),
-    $expansion  = $('#' + expansionId);
+  hideExpansion = function($expansion) {
     $expansion.removeClass('_LVshowHaircutExpand');
     $expansion.css({
       left:       "-100%"
@@ -183,37 +174,37 @@
         stringWidth               = $e.data('stringWidth'),
         stringWidthArray          = $e.data('stringWidthArray') || [];
 
-      createTemporaryStringContainer($e, temporaryStringContainer);
+    createTemporaryStringContainer($e, temporaryStringContainer);
 
-      $(temporaryStringContainer).html(text);
+    $(temporaryStringContainer).html(text);
 
-      $e.data("stringWidth", $(temporaryStringContainer).width());
+    $e.data("stringWidth", $(temporaryStringContainer).width());
 
-      while (stringWidth > containerWidth && containerWidth > jitterPadding) {
+    while (stringWidth > containerWidth && containerWidth > jitterPadding) {
 
-        if (stringWidthArray && stringWidthArray[i] < containerWidth) {
-        // if you already have data for this i, set it as the string width
-          trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
-          stringWidth = stringWidthArray[i];
-        }
-        else if (!stringWidthArray[i]){
-          trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
-          $(temporaryStringContainer).html(trimmedText);
-          stringWidth = $(temporaryStringContainer).width();
-          stringWidthArray[i] = stringWidth;
-        }
-        i++;
+      if (stringWidthArray && stringWidthArray[i] < containerWidth) {
+      // if you already have data for this i, set it as the string width
+        trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
+        stringWidth = stringWidthArray[i];
       }
+      else if (!stringWidthArray[i]){
+        trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
+        $(temporaryStringContainer).html(trimmedText);
+        stringWidth = $(temporaryStringContainer).width();
+        stringWidthArray[i] = stringWidth;
+      }
+      i++;
+    }
 
-      $(temporaryStringContainer).remove();
-      $e.data('stringWidthArray', stringWidthArray);
+    $(temporaryStringContainer).remove();
+    $e.data('stringWidthArray', stringWidthArray);
 
     return trimmedText;
   };
 
   // Get the actual usable area inside the div
   getUsableWidth = function ($e) {
-    var trueContainerWidth  = $e.innerWidth() - 
+    var trueContainerWidth  = $e.width() - 
                               $e.data('jitterPadding') -
                               parseInt($e.css('text-indent'), 10) -
                               parseInt($e.find('abbr').css('text-indent'), 10) - 
@@ -222,18 +213,18 @@
         abbrLeftPos         = $e.data('abbrLeftPos'),
         prevCharPos;
 
-
-
     if ($e.data("display") === "inline") {
       if (abbrLeftPos > $e.data('leftmostPos')) {
       // If the abbr is so long that it dropped to the next line
       // or if it's at the start of the line.
         return (trueContainerWidth - abbrLeftPos);
-      } else {
+      } else if ($e.css("text-align") != "center") {
       // Try figuring out where it should be positioned in the previous line
         prevCharPos = getPrevCharPos($e);
         //return ($e.data.innerWidth() - prevCharPos);
         return (trueContainerWidth - prevCharPos);
+      } else {
+        return trueContainerWidth;
       }
     } else {
       return trueContainerWidth;
@@ -246,14 +237,16 @@
         cursorPos;
     $(cursorDiv).html("&nbsp; ");
     $(cursorDiv).css({
-      display: "inline"
+      display: "inline",
     });
     if ($abbr.parent().get(0).tagName === 'A') {
       $e.find('a').before(cursorDiv);
     } else {
       $abbr.before(cursorDiv);
     }
+
     cursorPos = $(cursorDiv).position().left;
+
     $(cursorDiv).remove();
     return(cursorPos);
   };
@@ -263,25 +256,26 @@
         jitterPadding = $e.data("jitterPadding");
     
     if ($e.data("containerWidth") < jitterPadding) {
-      $e.find('abbr').html("&hellip;");
-      bindAbbrHover($e);
+      $abbr.html("&hellip;");
+      $abbr.addClass("_LVhaircutTrimmed");
     } else if ($e.data("stringWidth") > $e.data("containerWidth")) {
-      $e.find('abbr').html(getTrimmedStringByShrinking($e));
-      bindAbbrHover($e);
+      $abbr.html(getTrimmedStringByShrinking($e));
+      $abbr.addClass("_LVhaircutTrimmed");
     } else {
-      $e.find('abbr').html($e.find('abbr').attr('title'));
-      unbindAbbrHover($e);
+      $abbr.html($abbr.attr('title'));
+      $abbr.removeClass("_LVhaircutTrimmed");
     }
-
-  };
-
-  setAbbrTitle = function($e) {
-    var text = $e.find('abbr').text();
-    $e.find('abbr').attr('title', text);
   };
 
   setContainerWidth = function($e) {
     $e.data("containerWidth", getUsableWidth($e));
+  };
+
+  setRandomId = function($e) {
+    var id = getRandomId();
+    $e.data('container_id', id);
+    $e.find('abbr').data('container_id', id);
+    $e.addClass(id)
   };
 
   setup = function($e, opts) {
@@ -310,7 +304,9 @@
     $allMatching.each(function(){
       $e = $(this);
 
-      setAbbrTitle($e);
+      $e.addClass('_LVhaircut');
+
+      setRandomId($e);
       createExpansion($e);
 
       setup($e, opts);
@@ -318,14 +314,12 @@
 
       $e.stringResize();
     });
-
-    bindScrollEvent($allMatching);
+    
+    bindAbbrHover();
   };
 
   $.fn.stringResize = function() {
     var $allMatching  = $(this),
-        topWindowY    = $(window).scrollTop(),
-        bottomWindowY = (topWindowY + $(window).height()),
         $e,
         ePos;
 
@@ -333,11 +327,8 @@
 
     $allMatching.each(function(options){
       $e = $(this);
-      ePos = $e.offset().top;
-      if (ePos > topWindowY && ePos < bottomWindowY) {
-        setContainerWidth($e);
-        resize($e);
-      }
+      setContainerWidth($e);
+      resize($e);
     });
   };
 })(jQuery);
