@@ -4,8 +4,7 @@
       bindToResize      : true, //Clips text when the page resizes
       bindToScroll      : true, //Only clips text that's in the viewport
       jitterPadding     : 30, //The more haircut items on the page, the more it jitters during animation. Adding padding reduces jitter but gives you less usable space.
-      placement         : "middle",
-      scrollTimeout     : 50
+      placement         : "middle"
     },
 
     bindAbbrHover,
@@ -306,7 +305,6 @@
   setup = function($e, opts) {
     $e.data("placement",      opts.placement)
       .data('jitterPadding',  opts.jitterPadding)
-      .data('scrollTimeout',  opts.scrollTimeout)
       .data("stringWidth",    getStringWidth($e))
       .data("leftmostPos",    getLeftmostCharPos($e))
       .data("abbrLeftPos",    $e.find('abbr').position().left)
