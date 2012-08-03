@@ -11,6 +11,10 @@ overflowing or breaking to another line.
 
 You can see a video of it in action here: [Haircut in Action](https://vimeo.com/user7743505/review/46901981/e833d7d78d).
 
+When hovering over a piece of text that's been given a haircut, the full text is display in a nice bubble. This
+bubble can be styled to the user's desire. Haircut is smart enough to pull out and include anchor tags contained
+within ellipsized text.
+
 ## Setup
 
 First, include haircut on the page. Bonus points for rolling it into your asset pipeline.
@@ -59,6 +63,12 @@ which part of the string get ellipsized. Set the options like so:
     placement         : "middle"
   });
 ```
+
+## Styling
+
+To change the styling of the hover bubble, you will need to provide stylings for the classes
+`._LVshowHaircutExpand` and `._LVhaircutExpand`. You can see example CSS rules on the [test page
+of this project](https://github.com/layervault/jquery.haircut.js/blob/master/index.html).
 
 ## Authors
 
