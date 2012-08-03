@@ -62,4 +62,4 @@ which part of the string get ellipsized. Set the options like so:
 
 ## Authors
 
-Written by Allan Grinshtein and Kelly Sutton for LayerVault. Licensed under the MIT License.
+Written by [Allan Grinshtein](http://grinshtein.com) and [Kelly Sutton](http://kellysutton.com) for [LayerVault](http://layervault.com). More open-source projects are available in the [LayerVault Cosmos](http://cosmos.layervault.com). Licensed under the MIT License.
