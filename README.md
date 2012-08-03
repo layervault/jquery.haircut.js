@@ -1,7 +1,5 @@
 ## jquery.haircut.js
 
-** **
-
 We've got plenty of long filenames in the LayerVault file dashboard. We needed
 a way to condense them to fit into the interface while still displaying important
 parts (like the file extension). Thus, Haircut was born.
