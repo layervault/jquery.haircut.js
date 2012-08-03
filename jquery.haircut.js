@@ -23,7 +23,8 @@
     setContainerWidth,
     setRandomId,
     setup,
-    showExpansion;
+    showExpansion,
+    getEllipsiedString;
 
   bindAbbrHover = function() {
     if (!this.eventsBound) {
@@ -107,15 +108,15 @@
     }
 
     $expansion.css({
-      top:        topPosition,
-      left:       leftPosition
+      top:  topPosition,
+      left: leftPosition
     });
   };
 
   hideExpansion = function($expansion) {
     $expansion.removeClass('_LVshowHaircutExpand');
     $expansion.css({
-      left:       "-100%"
+      left: "-100%"
     });
   };
 
@@ -130,7 +131,7 @@
     else if (placement === "end") {
       trimmedText = text.slice(0, textLength-i) + "&hellip;";
     }
-    else {
+    else { // middle
       trimmedText = text.slice(0, halfwayTextPosition - Math.ceil(i/2)) + "&hellip;" + text.slice(halfwayTextPosition + Math.floor(i/2), textLength);
     }
 
@@ -139,17 +140,12 @@
 
   getLeftmostCharPos = function($e) {
     var
-      cursorDiv  = document.createElement('div'),
+      $cursorDiv = $('<div style="display: inline;">&nbsp; </div>'),
       cursorPos;
 
-    $(cursorDiv).html("&nbsp; ");
-    $(cursorDiv).css({
-      display: "inline"
-    });
-
-    $e.prepend(cursorDiv);
-    cursorPos = $(cursorDiv).position().left;
-    $(cursorDiv).remove();
+    $e.prepend($cursorDiv);
+    cursorPos = $cursorDiv.position().left;
+    $cursorDiv.remove();
 
     return(cursorPos);
   };
@@ -159,13 +155,15 @@
   };
 
   getStringWidth = function ($e) {
-    var $temporaryStringContainer = $('<div></div>')
+    var
+      $temporaryStringContainer = $('<div></div>'),
+      $abbr = $e.find('abbr');
 
-    $temporaryStringContainer.html($e.find('abbr').attr('title'));
+    $temporaryStringContainer.html($abbr.attr('title'));
     createTemporaryStringContainer($e, $temporaryStringContainer);
 
     $e.data("stringWidth", $temporaryStringContainer.width());
-    $e.data("stringHeight", $e.find('abbr').outerHeight());
+    $e.data("stringHeight", $abbr.outerHeight());
 
     $temporaryStringContainer.remove();
 
@@ -193,13 +191,12 @@
     $e.data("stringWidth", $temporaryStringContainer.width());
 
     while (stringWidth > containerWidth && containerWidth > jitterPadding) {
-
       if (stringWidthArray && stringWidthArray[i] < containerWidth) {
       // if you already have data for this i, set it as the string width
         trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
         stringWidth = stringWidthArray[i];
       }
-      else if (!stringWidthArray[i]){
+      else if (!stringWidthArray[i]) {
         trimmedText = getEllipsiedString(i, placement, textLength, halfwayTextPosition);
         $temporaryStringContainer.html(trimmedText);
         stringWidth = $temporaryStringContainer.width();
@@ -307,7 +304,6 @@
   };
 
   setup = function($e, opts) {
-
     $e.data("placement",      opts.placement)
       .data('jitterPadding',  opts.jitterPadding)
       .data('scrollTimeout',  opts.scrollTimeout)
@@ -351,13 +347,12 @@
   $.fn.stringResize = function() {
     var
       $allMatching  = $(this),
-      $e,
       ePos;
 
     hideAllExpansions();
 
     $allMatching.each(function(options){
-      $e = $(this);
+      var $e = $(this);
       setContainerWidth($e);
       resize($e);
     });
