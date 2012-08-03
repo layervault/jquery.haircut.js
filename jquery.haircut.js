@@ -7,7 +7,7 @@
       placement         : "middle",
       scrollTimeout     : 50
     },
-    
+
     bindAbbrHover,
     createExpansion,
     createTemporaryStringContainer,
@@ -36,23 +36,25 @@
 
       $('body').on('mouseleave', '._LVshowHaircutExpand', function () {
         hideExpansion($(this));
-      });  
+      });
 
       this.eventsBound = true;
     }
   };
 
   createExpansion = function($e) {
-    var expansionStringContainer   = document.createElement('div'),
-        randomId                   = $e.data('container_id'),
-        $abbr                      = $e.find('abbr'),
-        $abbrParent,
-        $abbrParentClone;
+    var
+      expansionStringContainer   = document.createElement('div'),
+      randomId                   = $e.data('container_id'),
+      $abbr                      = $e.find('abbr'),
+      $abbrParent,
+      $abbrParentClone;
 
     if ($abbr.parent().get(0).tagName === 'A') { // Is the wrapping tag an anchor?
-        $abbrParentClone = $abbr.parent().clone(); 
+        $abbrParentClone = $abbr.parent().clone();
         $(expansionStringContainer).html($abbrParentClone.html($abbr.attr('title'))); // Unwrap the <abbr> and stick it inside the anchor.
-    } else {
+    }
+    else {
       $(expansionStringContainer).html($abbr.attr('title'));
     }
 
@@ -60,12 +62,12 @@
 
     $(expansionStringContainer).attr('id', randomId);
 
-    $('body').append(expansionStringContainer);    
+    $('body').append(expansionStringContainer);
   };
 
   createTemporaryStringContainer = function($e, temporaryStringContainer) {
       $(temporaryStringContainer).css({
-        position: 'fixed', 
+        position: 'fixed',
         top: '100%',
         fontSize: $e.find('abbr').css('font-size'),
         lineHeight: $e.find('abbr').css('line-height'),
@@ -82,16 +84,17 @@
   };
 
   positionExpansion = function($e, $expansion) {
-    var w                         = $expansion.outerWidth(),
-        h                         = $expansion.outerHeight(),
-        $attr                     = $e.find('abbr');
-        attrWidth                 = $attr.width(),
-        attrHeight                = $attr.height(),
-        attrTop                   = $attr.offset().top,
-        attrLeft                  = $attr.offset().left,
-        expansionLeftPadding      = parseInt($('._LVhaircutExpand').css('padding-left'),10) * 2,
-        topPosition               = (attrTop + (attrHeight/2)) - (h/2),
-        leftPosition              = (attrLeft + (attrWidth/2)) - (w/2)
+    var
+      w                         = $expansion.outerWidth(),
+      h                         = $expansion.outerHeight(),
+      $attr                     = $e.find('abbr');
+      attrWidth                 = $attr.width(),
+      attrHeight                = $attr.height(),
+      attrTop                   = $attr.offset().top,
+      attrLeft                  = $attr.offset().left,
+      expansionLeftPadding      = parseInt($('._LVhaircutExpand').css('padding-left'),10) * 2,
+      topPosition               = (attrTop + (attrHeight/2)) - (h/2),
+      leftPosition              = (attrLeft + (attrWidth/2)) - (w/2);
 
 
     if ((leftPosition - expansionLeftPadding)< 0) {
@@ -133,13 +136,15 @@
   }
 
   getLeftmostCharPos = function($e) {
-    var cursorDiv  = document.createElement('div'),
-        cursorPos;
+    var
+      cursorDiv  = document.createElement('div'),
+      cursorPos;
+
     $(cursorDiv).html("&nbsp; ");
     $(cursorDiv).css({
       display: "inline"
     });
-  
+
     $e.prepend(cursorDiv);
     cursorPos = $(cursorDiv).position().left;
     $(cursorDiv).remove();
@@ -153,26 +158,29 @@
 
   getStringWidth = function ($e) {
     var temporaryStringContainer = document.createElement('div');
+
     $(temporaryStringContainer).html($e.find('abbr').attr('title'));
     createTemporaryStringContainer($e, temporaryStringContainer);
     $e.data("stringWidth", $(temporaryStringContainer).width());
     $e.data("stringHeight", $e.find('abbr').outerHeight());
     $(temporaryStringContainer).remove();
+
     return $e.data("stringWidth");
   };
 
   getTrimmedStringByShrinking = function ($e) {
-    var temporaryStringContainer  = document.createElement('div'),
-        containerWidth            = $e.data('containerWidth'),
-        jitterPadding             = $e.data('jitterPadding'),
-        trimmedText               = 
-        text                      = $e.find('abbr').attr('title'),
-        textLength                = text.length,
-        halfwayTextPosition       = Math.floor(textLength/2),
-        placement                 = $e.data('placement'),
-        i                         = 0,
-        stringWidth               = $e.data('stringWidth'),
-        stringWidthArray          = $e.data('stringWidthArray') || [];
+    var
+      temporaryStringContainer  = document.createElement('div'),
+      containerWidth            = $e.data('containerWidth'),
+      jitterPadding             = $e.data('jitterPadding'),
+      trimmedText               =
+      text                      = $e.find('abbr').attr('title'),
+      textLength                = text.length,
+      halfwayTextPosition       = Math.floor(textLength/2),
+      placement                 = $e.data('placement'),
+      i                         = 0,
+      stringWidth               = $e.data('stringWidth'),
+      stringWidthArray          = $e.data('stringWidthArray') || [];
 
     createTemporaryStringContainer($e, temporaryStringContainer);
 
@@ -204,26 +212,31 @@
 
   // Get the actual usable area inside the div
   getUsableWidth = function ($e) {
-    var trueContainerWidth  = $e.width() - 
-                              $e.data('jitterPadding') -
-                              parseInt($e.css('text-indent'), 10) -
-                              parseInt($e.find('abbr').css('text-indent'), 10) - 
-                              parseInt($e.find('abbr').css('margin'), 10) -
-                              (parseInt($e.find('abbr').css('border-width'), 10)*2),
-        abbrLeftPos         = $e.data('abbrLeftPos'),
-        prevCharPos;
+    var
+      trueContainerWidth,
+      abbrLeftPos         = $e.data('abbrLeftPos'),
+      prevCharPos;
+
+    trueContainerWidth  = $e.width() -
+                            $e.data('jitterPadding') -
+                            parseInt($e.css('text-indent'), 10) -
+                            parseInt($e.find('abbr').css('text-indent'), 10) -
+                            parseInt($e.find('abbr').css('margin'), 10) -
+                            (parseInt($e.find('abbr').css('border-width'), 10)*2);
 
     if ($e.data("display") === "inline") {
       if (abbrLeftPos > $e.data('leftmostPos')) {
       // If the abbr is so long that it dropped to the next line
       // or if it's at the start of the line.
         return (trueContainerWidth - abbrLeftPos);
-      } else if ($e.css("text-align") != "center") {
+      }
+      else if ($e.css("text-align") != "center") {
       // Try figuring out where it should be positioned in the previous line
         prevCharPos = getPrevCharPos($e);
         //return ($e.data.innerWidth() - prevCharPos);
         return (trueContainerWidth - prevCharPos);
-      } else {
+      }
+      else {
         return trueContainerWidth;
       }
     } else {
@@ -232,36 +245,43 @@
   };
 
   getPrevCharPos = function($e) {
-    var $abbr = $e.find('abbr'),
-        cursorDiv  = document.createElement('div'),
-        cursorPos;
+    var
+      $abbr = $e.find('abbr'),
+      cursorDiv  = document.createElement('div'),
+      cursorPos;
+
     $(cursorDiv).html("&nbsp; ");
     $(cursorDiv).css({
       display: "inline",
     });
+
     if ($abbr.parent().get(0).tagName === 'A') {
       $e.find('a').before(cursorDiv);
-    } else {
+    }
+    else {
       $abbr.before(cursorDiv);
     }
 
     cursorPos = $(cursorDiv).position().left;
-
     $(cursorDiv).remove();
+
     return(cursorPos);
   };
 
   resize = function($e) {
-    var $abbr = $e.find('abbr'),
-        jitterPadding = $e.data("jitterPadding");
-    
+    var
+      $abbr = $e.find('abbr'),
+      jitterPadding = $e.data("jitterPadding");
+
     if ($e.data("containerWidth") < jitterPadding) {
       $abbr.html("&hellip;");
       $abbr.addClass("_LVhaircutTrimmed");
-    } else if ($e.data("stringWidth") > $e.data("containerWidth")) {
+    }
+    else if ($e.data("stringWidth") > $e.data("containerWidth")) {
       $abbr.html(getTrimmedStringByShrinking($e));
       $abbr.addClass("_LVhaircutTrimmed");
-    } else {
+    }
+    else {
       $abbr.html($abbr.attr('title'));
       $abbr.removeClass("_LVhaircutTrimmed");
     }
@@ -296,8 +316,9 @@
   //-- Methods to attach to jQuery sets
 
   $.fn.haircut = function(opts) {
-    var $allMatching = $(this),
-        $e;
+    var
+      $allMatching = $(this),
+      $e;
 
     opts = $.extend(options, opts);
 
@@ -314,14 +335,15 @@
 
       $e.stringResize();
     });
-    
+
     bindAbbrHover();
   };
 
   $.fn.stringResize = function() {
-    var $allMatching  = $(this),
-        $e,
-        ePos;
+    var
+      $allMatching  = $(this),
+      $e,
+      ePos;
 
     hideAllExpansions();
 
