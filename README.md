@@ -15,7 +15,7 @@ You can see a video of it in action here: [Haircut in Action](https://vimeo.com/
 
 First, include haircut on the page. Bonus points for rolling it into your asset pipeline.
 
-```javascript
+```
 <script type="text/javascript" src="/jquery.haircut.js"></script>
 ```
 
@@ -44,13 +44,13 @@ which part of the string get ellipsized. Set the options like so:
 
 ```javascript
   $('.Filename').haircut({
-    //Clips text when the page resizes
+    // Clips text when the page resizes
     bindToResize      : true,
 
-    //Only clips text that's in the viewport
+    // Only clips text that's in the viewport
     bindToScroll      : true,
 
-    //The more haircut items on the page, the more it jitters during animation.
+    // The more haircut items on the page, the more it jitters during animation.
     // Adding padding reduces jitter but gives you less usable space.
     jitterPadding     : 30,
 
