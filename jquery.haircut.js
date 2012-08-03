@@ -85,16 +85,16 @@
 
   positionExpansion = function($e, $expansion) {
     var
-      w                         = $expansion.outerWidth(),
-      h                         = $expansion.outerHeight(),
-      $attr                     = $e.find('abbr');
-      attrWidth                 = $attr.width(),
-      attrHeight                = $attr.height(),
-      attrTop                   = $attr.offset().top,
-      attrLeft                  = $attr.offset().left,
-      expansionLeftPadding      = parseInt($('._LVhaircutExpand').css('padding-left'),10) * 2,
-      topPosition               = (attrTop + (attrHeight/2)) - (h/2),
-      leftPosition              = (attrLeft + (attrWidth/2)) - (w/2);
+      w                     = $expansion.outerWidth(),
+      h                     = $expansion.outerHeight(),
+      $attr                 = $e.find('abbr');
+      attrWidth             = $attr.width(),
+      attrHeight            = $attr.height(),
+      attrTop               = $attr.offset().top,
+      attrLeft              = $attr.offset().left,
+      expansionLeftPadding  = parseInt($('._LVhaircutExpand').css('padding-left'),10) * 2,
+      topPosition           = (attrTop + (attrHeight/2)) - (h/2),
+      leftPosition          = (attrLeft + (attrWidth/2)) - (w/2);
 
 
     if ((leftPosition - expansionLeftPadding)< 0) {
@@ -299,13 +299,14 @@
   };
 
   setup = function($e, opts) {
-    $e.data("placement", opts.placement);
-    $e.data('jitterPadding', opts.jitterPadding);
-    $e.data('scrollTimeout', opts.scrollTimeout);
-    $e.data("stringWidth", getStringWidth($e));
-    $e.data("leftmostPos", getLeftmostCharPos($e));
-    $e.data("abbrLeftPos", $e.find('abbr').position().left);
-    $e.data("display", $e.find('abbr').css('display'));
+
+    $e.data("placement",      opts.placement)
+      .data('jitterPadding',  opts.jitterPadding)
+      .data('scrollTimeout',  opts.scrollTimeout)
+      .data("stringWidth",    getStringWidth($e))
+      .data("leftmostPos",    getLeftmostCharPos($e))
+      .data("abbrLeftPos",    $e.find('abbr').position().left)
+      .data("display",        $e.find('abbr').css('display'));
   };
 
   // Expose our options to the world.
