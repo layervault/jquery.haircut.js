@@ -50,6 +50,10 @@
       $abbrParent,
       $abbrParentClone;
 
+    if ($abbr.length === 0) {
+      return;
+    }
+
     if ($abbr.parent().get(0).tagName === 'A') { // Is the wrapping tag an anchor?
         $abbrParentClone = $abbr.parent().clone();
         $expansionStringContainer.html($abbrParentClone.html($abbr.attr('title'))); // Unwrap the <abbr> and stick it inside the anchor.
@@ -327,6 +331,10 @@
 
     $allMatching.each(function(){
       $e = $(this);
+
+      if ($e.find('abbr').length === 0) {
+        return;
+      }
 
       $e.addClass('_LVhaircut');
 
