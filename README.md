@@ -46,12 +46,6 @@ which part of the string get ellipsized. Set the options like so:
 
 ```javascript
   $('.Filename').haircut({
-    // Clips text when the page resizes
-    bindToResize      : true,
-
-    // Only clips text that's in the viewport
-    bindToScroll      : true,
-
     // The more haircut items on the page, the more it jitters during animation.
     // Adding padding reduces jitter but gives you less usable space.
     jitterPadding     : 30,
